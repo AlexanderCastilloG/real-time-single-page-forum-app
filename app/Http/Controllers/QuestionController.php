@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\QuestionResource;
 use App\Model\Question;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class QuestionController extends Controller
 {
@@ -14,7 +16,8 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        //
+        //latest -> te trae el último elemento
+        return QuestionResource::collection(Question::latest()->get());
     }
 
     /**
@@ -35,7 +38,11 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Puedes utilizar esto si estas con tipo de authenticación 
+        // auth()->user()->question()->create($request->all());
+
+        Question::create($request->all());
+        return response('Created', Response::HTTP_CREATED);
     }
 
     /**
@@ -46,7 +53,8 @@ class QuestionController extends Controller
      */
     public function show(Question $question)
     {
-        //
+        // QuestionResource -> transforma la salida y encasula en un array personalizado
+        return new QuestionResource($question);
     }
 
     /**
@@ -80,6 +88,7 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question)
     {
-        //
+        $question->delete();
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }
