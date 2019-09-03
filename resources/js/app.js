@@ -10,7 +10,9 @@ export default new Vuetify({});
 // Import Class User
 import User from './Helpers/User';
 window.User = User;
-console.log(User.id());
+
+//Event Bus
+window.EventBus = new Vue();
 
 
 // Components
