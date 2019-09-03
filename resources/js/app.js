@@ -7,6 +7,12 @@ import Vuetify from 'vuetify';
 Vue.use(Vuetify);
 export default new Vuetify({});
 
+// Import Class User
+import User from './Helpers/User';
+window.User = User;
+console.log(User.id());
+
+
 // Components
 Vue.component('AppHome', require('./components/AppHome.vue').default);
 
