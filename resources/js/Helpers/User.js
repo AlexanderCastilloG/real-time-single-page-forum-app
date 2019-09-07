@@ -47,8 +47,12 @@ class UserC {
     id() {
         if (this.loggedIn()) {
             const payload = Token.payload(AppStorage.getToken());
-            return payload.sub;
+            return payload.sub; //sub es el Id del usuario
         }
+    }
+
+    own(id) {
+        return this.id() == id;
     }
 }
 

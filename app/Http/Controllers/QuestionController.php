@@ -31,16 +31,6 @@ class QuestionController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -49,10 +39,8 @@ class QuestionController extends Controller
     public function store(Request $request)
     {
         // Puedes utilizar esto si estas con tipo de authenticación 
-        // auth()->user()->question()->create($request->all());
-
-        Question::create($request->all());
-        return response('Created', Response::HTTP_CREATED);
+        $question = auth()->user()->question()->create($request->all());
+        return response(new QuestionResource($question), Response::HTTP_CREATED);
     }
 
     /**

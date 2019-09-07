@@ -7,6 +7,12 @@ import Vuetify from 'vuetify';
 Vue.use(Vuetify);
 export default new Vuetify({});
 
+// VueSimple MDE
+import VueSimplemde from 'vue-simplemde';
+Vue.component('vue-simplemde', VueSimplemde);
+import md from 'marked'; // para ver el código en html en el markdown
+window.md = md;
+
 // Import Class User
 import User from './Helpers/User';
 window.User = User;
