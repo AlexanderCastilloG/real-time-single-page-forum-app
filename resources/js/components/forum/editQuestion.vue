@@ -25,8 +25,7 @@
 </template>
 
 <script>
-import { mdiContentSave } from '@mdi/js';
-import { mdiCloseCircle } from '@mdi/js';
+import { mdiContentSave, mdiCloseCircle } from '@mdi/js';
 
 export default {
     props: ['data'],

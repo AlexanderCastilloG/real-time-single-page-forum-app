@@ -7,7 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reply extends Model
 {
-    protected $guarded = ['id', 'created_at', 'updated_at'];
+    protected static function boot(){
+        
+        parent::boot();
+
+        static::creating(function(Reply $reply){
+            $reply->user_id = auth()->id();
+        });
+    }
+
+    protected $fillable = ['body'];
+
+    // protected $guarded = ['id', 'created_at', 'updated_at'];
 
     public function question() {
         return $this->belongsTo(Question::class);

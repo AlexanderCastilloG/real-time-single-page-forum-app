@@ -54,6 +54,10 @@ class UserC {
     own(id) {
         return this.id() == id;
     }
+
+    admin() {
+        return this.id() == 21;
+    }
 }
 
 const User = new UserC();
