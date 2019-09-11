@@ -38,12 +38,14 @@ export default {
                 });
             });
 
-            // Escuchar las Notificaciones via Pusher
-            //User.id() es de la clase de id de Javascript
-            Echo.private('App.User.' + User.id())
-                .notification((notification) => {
-                    this.content.unshift(notification.reply);
-                });
+            if(User.loggedIn()){
+                // Escuchar las Notificaciones via Pusher
+                //User.id() es de la clase de id de Javascript
+                Echo.private('App.User.' + User.id())
+                    .notification((notification) => {
+                        this.content.unshift(notification.reply);
+                    });
+            }
 
             // Escuchar el channel para eliminar
             Echo.channel('deleteReplyChannel')

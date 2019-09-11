@@ -73,7 +73,7 @@ export default {
                 this.unread = res.data.unread;
                 this.unreadCount = res.data.unread.length;
             })
-            .catch(err => console.log(err));
+            .catch(error => Exception.handle(error));
         },
 
         readIt(notification){
