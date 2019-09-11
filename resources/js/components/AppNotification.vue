@@ -55,6 +55,14 @@ export default {
         if(User.loggedIn()){
             this.getNotifications();
         }
+
+        // Escuchar las Notificaciones
+        //User.id() es de la clase de id de Javascript
+        Echo.private('App.User.' + User.id())
+            .notification((notification) => {
+                this.unread.unshift(notification);
+                this.unreadCount++;
+            });
     },
 
     methods: {
