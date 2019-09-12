@@ -1,5 +1,9 @@
 <template>
     <v-container>
+        <v-alert v-if="loadingError" type="error">
+            {{ errors.name[0] }}
+        </v-alert>
+
         <v-form @submit.prevent="submit">
             <v-text-field
                 label="Category Name"
@@ -8,8 +12,8 @@
                 required>
             </v-text-field>
 
-            <v-btn type="submit" color="pink" v-if="editSlug">Update</v-btn>
-            <v-btn type="submit" color="teal" v-else>Create</v-btn>
+            <v-btn type="submit" :disabled="disabled" color="pink" v-if="editSlug">Update</v-btn>
+            <v-btn type="submit" :disabled="disabled" color="teal" v-else>Create</v-btn>
         </v-form>
 
         <v-card class="mt-2">
@@ -64,7 +68,10 @@ export default {
             icons: {
                 mdiPencil,
                 mdiDelete
-            }
+            },
+            
+            errors: null,
+            loadingError: false
         }
     },
 
@@ -90,7 +97,11 @@ export default {
                 this.categories.unshift(res.data);
                 this.form.name = null;
             })
-            .catch(error => console.log(error));
+            .catch(error => { 
+                this.errors = error.response.data.errors
+                this.loadingError = true;
+                this.cargaError();
+            });
         },
 
         update(){
@@ -100,7 +111,18 @@ export default {
                 this.form.name = null;
                 this.editSlug = null;
             })
-            .catch(error => console.log(error));
+            .catch(error => {
+                this.errors = error.response.data.errors
+                this.loadingError = true;
+                this.cargaError();
+            });
+        },
+        
+        cargaError(){
+            setTimeout(() => {
+                this.loadingError = false;
+                this.error = null;
+            }, 3000);
         },
 
         destroy(slug, index){
@@ -113,6 +135,14 @@ export default {
             this.form.name = this.categories[index].name;
             this.editSlug = this.categories[index].slug;
             this.categories.splice(index, 1);
+        }
+    },
+
+    computed: {
+        disabled(){
+            // return !this.form.name;
+            // return false;
+            return this.loadingError;
         }
     }
 }

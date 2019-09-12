@@ -47,7 +47,8 @@ export default {
 
             read: {},
             unread: {},
-            unreadCount: 0
+            unreadCount: 0,
+            sound: "http://localhost:8000/audio/notifi.mp3"
         }
     },
 
@@ -60,12 +61,21 @@ export default {
         //User.id() es de la clase de id de Javascript
         Echo.private('App.User.' + User.id())
             .notification((notification) => {
+                // Ecuchar la notificación
+                this.playSound();
                 this.unread.unshift(notification);
                 this.unreadCount++;
             });
     },
 
     methods: {
+
+        // Reproducir un audio
+        playSound(){
+            let alert = new Audio(this.sound);
+            alert.play();
+        },
+
         getNotifications(){
             axios.post('/api/notifications')
             .then(res => {

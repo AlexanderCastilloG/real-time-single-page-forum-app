@@ -2,12 +2,17 @@
     <v-card
     color="grey lighten-4"
     flat
-    height="70px"
+    height="48px"
     tile
   >
-    <v-toolbar dense color="transparent">
+    <v-toolbar dense color="indigo" dark>
       <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
-      <v-toolbar-title>Bitfumes</v-toolbar-title>
+      <v-toolbar-title>
+        <router-link to="/" class="white--text sinUnderline">
+          Bitfumes
+        </router-link>
+      </v-toolbar-title>
+
       <v-spacer></v-spacer>
       <app-notification v-if="loggedIn"></app-notification>
 
@@ -16,7 +21,7 @@
             v-for="item in items"
             :key="item.title"
             >
-              <router-link v-if="item.show" :to="item.to">
+              <router-link v-if="item.show" :to="item.to" class="sinUnderline">
                 <v-btn text>{{ item.title }}</v-btn>
               </router-link>
          </span>
@@ -53,3 +58,9 @@ export default {
     }
 }
 </script>
+
+<style>
+.sinUnderline {
+  text-decoration: none;
+}
+</style>

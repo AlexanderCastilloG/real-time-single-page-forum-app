@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\QuestionRequest; // validación para questions
 use App\Http\Resources\QuestionResource;
 use App\Model\Question;
 use Illuminate\Http\Request;
@@ -36,7 +37,7 @@ class QuestionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(QuestionRequest $request)
     {
         // Puedes utilizar esto si estas con tipo de authenticación 
         $question = auth()->user()->question()->create($request->all());
@@ -53,17 +54,6 @@ class QuestionController extends Controller
     {
         // QuestionResource -> transforma la salida y encasula en un array personalizado
         return new QuestionResource($question);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Model\Question  $question
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Question $question)
-    {
-        //
     }
 
     /**
